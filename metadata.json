@@ -1,0 +1,6 @@
+{
+  "name": "سامانه بایگانی الکترونیکی اسناد",
+  "description": "قالب حرفه‌ای و جامع پنل ادمین سامانه بایگانی اسناد الکترونیکی (EDMS) با رابط کاربری فارسی و راست‌چین",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
