@@ -118,7 +118,7 @@ export const initialDocuments: DocumentItem[] = [
     author: 'مهندس آرش شریفی',
     authorAvatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80',
     department: 'فناوری اطلاعات و زیرساخت',
-    tags: ['سرور', 'تأمین تجهیزات', 'مرکزداده', 'مناقصه'],
+    tags: ['فوری', 'محرمانه', 'سرور', 'تأمین تجهیزات', 'مرکزداده'],
     version: '1.2',
     versions: [
       {
@@ -170,7 +170,7 @@ export const initialDocuments: DocumentItem[] = [
     updatedAt: '1403/07/03',
     author: 'فاطمه رسولی',
     department: 'حسابداری و مالی',
-    tags: ['فاکتور', 'پشتیبانی ابری', 'مالیات', 'هزینه جاری'],
+    tags: ['تایید شده', 'فاکتور', 'پشتیبانی ابری', 'مالیات'],
     version: '1.0',
     versions: [
       {
@@ -207,7 +207,7 @@ export const initialDocuments: DocumentItem[] = [
     updatedAt: '1403/06/25',
     author: 'علیرضا حسینی',
     department: 'کارگزینی و منابع انسانی',
-    tags: ['حکم کارگزینی', 'ترفیع', 'مدیر R&D', 'پرسنلی'],
+    tags: ['پیش‌نویس', 'محرمانه', 'حکم کارگزینی', 'پرسنلی'],
     version: '1.0',
     versions: [
       {

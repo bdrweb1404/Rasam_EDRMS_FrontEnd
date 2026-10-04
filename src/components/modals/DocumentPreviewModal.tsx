@@ -21,6 +21,7 @@ import {
   Copy,
 } from 'lucide-react';
 import { ConfidentialityLevel, DocumentItem } from '../../types';
+import { ConfirmDeleteModal } from './ConfirmDeleteModal';
 
 interface DocumentPreviewModalProps {
   onOpenMoveModal?: (doc: DocumentItem) => void;
@@ -40,6 +41,7 @@ export const DocumentPreviewModal: React.FC<DocumentPreviewModalProps> = ({ onOp
   } = useApp();
 
   const [activeTab, setActiveTab] = useState<'preview' | 'metadata' | 'versions' | 'audit'>('preview');
+  const [isConfirmDeleteOpen, setIsConfirmDeleteOpen] = useState(false);
 
   // Metadata edit state
   const [editedTitle, setEditedTitle] = useState('');
@@ -171,8 +173,8 @@ export const DocumentPreviewModal: React.FC<DocumentPreviewModalProps> = ({ onOp
                   <span>بازیابی</span>
                 </button>
                 <button
-                  onClick={() => deletePermanently(doc.id)}
-                  className="p-1.5 text-rose-600 hover:bg-rose-100 rounded-lg transition-colors"
+                  onClick={() => setIsConfirmDeleteOpen(true)}
+                  className="p-1.5 text-rose-600 hover:bg-rose-100 dark:hover:bg-rose-950/40 rounded-lg transition-colors"
                   title="حذف دائمی"
                 >
                   <Trash2 className="w-4 h-4" />
@@ -642,6 +644,17 @@ export const DocumentPreviewModal: React.FC<DocumentPreviewModalProps> = ({ onOp
           )}
         </div>
       </div>
+
+      {/* Confirmation Modal before permanent deletion */}
+      <ConfirmDeleteModal
+        isOpen={isConfirmDeleteOpen}
+        document={doc}
+        onConfirm={() => {
+          setIsConfirmDeleteOpen(false);
+          deletePermanently(doc.id);
+        }}
+        onCancel={() => setIsConfirmDeleteOpen(false)}
+      />
     </div>
   );
 };

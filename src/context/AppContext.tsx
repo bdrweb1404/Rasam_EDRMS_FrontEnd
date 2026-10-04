@@ -54,6 +54,8 @@ interface AppContextType {
     metadata: Record<string, string>;
   }) => void;
   updateDocumentMetadata: (id: string, metadata: Record<string, string>, tags: string[], title?: string) => void;
+  updateDocumentTags: (id: string, tags: string[]) => void;
+  batchAddTagsToDocuments: (ids: string[], newTags: string[]) => void;
   trashDocument: (id: string) => void;
   restoreDocument: (id: string) => void;
   deletePermanently: (id: string) => void;
@@ -387,6 +389,50 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     addToast('ویرایش موفق', 'متادیتا و مشخصات سند با موفقیت ذخیره شد.', 'success');
   };
 
+  const updateDocumentTags = (id: string, tags: string[]) => {
+    setDocuments((prev) =>
+      prev.map((doc) => {
+        if (doc.id === id) {
+          const updated = {
+            ...doc,
+            tags,
+            updatedAt: '۱۴۰۳/۰۷/۲۰',
+          };
+          if (selectedDocForPreview?.id === id) {
+            setSelectedDocForPreview(updated);
+          }
+          return updated;
+        }
+        return doc;
+      })
+    );
+
+    const doc = documents.find((d) => d.id === id);
+    addLog('update', 'بروزرسانی برچسب‌های سند', id, doc?.title, `برچسب‌های جدید: ${tags.join('، ')}`);
+    addToast('برچسب‌ها به‌روز شد', `برچسب‌های سند «${doc?.title || ''}» ذخیره گردید.`, 'success');
+  };
+
+  const batchAddTagsToDocuments = (ids: string[], newTags: string[]) => {
+    if (ids.length === 0 || newTags.length === 0) return;
+
+    setDocuments((prev) =>
+      prev.map((doc) => {
+        if (ids.includes(doc.id)) {
+          const combined = Array.from(new Set([...doc.tags, ...newTags]));
+          return {
+            ...doc,
+            tags: combined,
+            updatedAt: '۱۴۰۳/۰۷/۲۰',
+          };
+        }
+        return doc;
+      })
+    );
+
+    addLog('update', 'برچسب‌گذاری گروهی اسناد', undefined, undefined, `افزودن برچسب‌های [${newTags.join('، ')}] به ${ids.length} سند`);
+    addToast('برچسب‌گذاری گروهی موفق', `برچسب‌ها به ${ids.length} سند انتخاب‌شده افزوده شدند.`, 'success');
+  };
+
   const trashDocument = (id: string) => {
     const doc = documents.find((d) => d.id === id);
     if (!doc) return;
@@ -599,6 +645,8 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         documents,
         addDocument,
         updateDocumentMetadata,
+        updateDocumentTags,
+        batchAddTagsToDocuments,
         trashDocument,
         restoreDocument,
         deletePermanently,
